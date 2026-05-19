@@ -1,7 +1,5 @@
-
-
-//Fibonacci Series using Recursion
-class fibonacci
+// Fibonacci Series using matrix exponentiation.
+public class Fibonacci
 {
      
     static int fib(int n)

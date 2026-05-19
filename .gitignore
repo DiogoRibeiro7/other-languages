@@ -1,0 +1,33 @@
+# General
+.DS_Store
+Thumbs.db
+
+# C/C++
+*.o
+*.obj
+*.out
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+*.ilk
+*.pdb
+
+# Java
+*.class
+*.war
+*.ear
+
+# Go
+bin/
+pkg/
+
+# JavaScript / TypeScript
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Fortran
+*.mod

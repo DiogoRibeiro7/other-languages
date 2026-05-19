@@ -1,4 +1,4 @@
-public class CatalnNumber {
+public class CatalanNumber {
     int catalan(int n)
     {
         int res = 0;
@@ -19,7 +19,7 @@ public class CatalnNumber {
     // Driver Code
     public static void main(String[] args)
     {
-        CatalnNumber cn = new CatalnNumber();
+        CatalanNumber cn = new CatalanNumber();
         for (int i = 0; i < 15; i++)
         {
             System.out.print(cn.catalan(i) + " ");
