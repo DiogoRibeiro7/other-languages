@@ -116,6 +116,19 @@ if (Has-Command "gcc") {
         if ($text -notmatch "lu_solution = \[1.0, -2.0, -2.0\]") {
             throw "Unexpected C LU output: $text"
         }
+        if ($text -notmatch "determinant = -3.0") {
+            throw "Unexpected C LU determinant output: $text"
+        }
+        $rowMatches = [regex]::Matches($text, "row_residuals = \[([0-9\.\-eE\+]+), ([0-9\.\-eE\+]+), ([0-9\.\-eE\+]+)\]")
+        if ($rowMatches.Count -eq 0) {
+            throw "Missing C LU row residual output: $text"
+        }
+        foreach ($i in 1..3) {
+            $val = [double]::Parse($rowMatches[0].Groups[$i].Value, [System.Globalization.CultureInfo]::InvariantCulture)
+            if ([math]::Abs($val) -ge 1.0e-12) {
+                throw "C LU row residual too large: $val"
+            }
+        }
         Assert-ResidualBelow -Text $text -Tolerance 1.0e-12 -Label "C LU"
     }
 } else {
@@ -214,6 +227,19 @@ if (Has-Command "gfortran") {
         if ($text -notmatch "lu_solution = \[\s*1.0,\s*-2.0,\s*-2.0\]") {
             throw "Unexpected Fortran LU output: $text"
         }
+        if ($text -notmatch "determinant =\s+-3.0") {
+            throw "Unexpected Fortran LU determinant output: $text"
+        }
+        $rowMatch = [regex]::Match($text, "row_residuals = \[\s*([0-9\.\-E\+]+),\s*([0-9\.\-E\+]+),\s*([0-9\.\-E\+]+)\]")
+        if (-not $rowMatch.Success) {
+            throw "Missing Fortran LU row residual output: $text"
+        }
+        foreach ($i in 1..3) {
+            $val = [double]::Parse($rowMatch.Groups[$i].Value, [System.Globalization.CultureInfo]::InvariantCulture)
+            if ([math]::Abs($val) -ge 1.0e-12) {
+                throw "Fortran LU row residual too large: $val"
+            }
+        }
         Assert-ResidualBelow -Text $text -Tolerance 1.0e-12 -Label "Fortran LU"
     }
 } else {
@@ -250,6 +276,30 @@ if (Has-Command "cobc") {
             $result = & $out
             if ($result -notmatch "3628800") {
                 throw "Unexpected COBOL factorial output: $result"
+            }
+        }
+        Run-Step "COBOL transactions report compile and run" {
+            $out = Join-Path $cobolBuild "transactions_report.exe"
+            cobc -x (Join-Path $repoRoot "cobol\transactions_report.cob") -o $out
+            $result = & $out
+            $text = ($result | Out-String)
+            if ($text -notmatch "TOTAL_RECORDS=\s*00006") {
+                throw "Unexpected COBOL report total count: $text"
+            }
+            if ($text -notmatch "VALID_RECORDS=\s*00004") {
+                throw "Unexpected COBOL report valid count: $text"
+            }
+            if ($text -notmatch "INVALID_RECORDS=\s*00002") {
+                throw "Unexpected COBOL report invalid count: $text"
+            }
+            if ($text -notmatch "DEBIT_TOTAL_CENTS=\s*000000001325") {
+                throw "Unexpected COBOL report debit total: $text"
+            }
+            if ($text -notmatch "CREDIT_TOTAL_CENTS=\s*000000001300") {
+                throw "Unexpected COBOL report credit total: $text"
+            }
+            if ($text -notmatch "NET_TOTAL_CENTS=\+000000000025") {
+                throw "Unexpected COBOL report net total: $text"
             }
         }
     }

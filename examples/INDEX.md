@@ -35,6 +35,8 @@ Primary track: Fortran, C, COBOL.
   - `.\.build\fortran\lu_solve.exe`
 - Complexity: O(n^3) decomposition, O(n^2) solve
 - Sample output: contains `lu_solution = [1.0, -2.0, -2.0]`
+- Determinant: `determinant = -3.0`
+- Row residuals: each entry in `row_residuals` should be `< 1e-12` in absolute value
 - Residual check: `residual_inf_norm` should be `< 1e-12`
 
 ## C
@@ -76,6 +78,8 @@ Primary track: Fortran, C, COBOL.
   - `.\.build\c\lu_solve.exe`
 - Complexity: O(n^3) decomposition, O(n^2) solve
 - Sample output: `lu_solution = [1.0, -2.0, -2.0]`
+- Determinant: `determinant = -3.0`
+- Row residuals: each entry in `row_residuals` should be `< 1e-12` in absolute value
 - Residual check: `residual_inf_norm` should be `< 1e-12`
 
 ## COBOL
@@ -103,6 +107,21 @@ Primary track: Fortran, C, COBOL.
 - Sample output: contains `6765`
 - Note: recursive COBOL Fibonacci is intentionally omitted for now due to portability/toolchain differences.
 
+- Topic: Transactions report (batch validate + aggregate)
+- File: `cobol/transactions_report.cob`
+- Input: `cobol/sample_transactions.txt`
+- Run:
+  - `cobc -x .\cobol\transactions_report.cob -o .\.build\cobol\transactions_report.exe`
+  - `.\.build\cobol\transactions_report.exe`
+- Complexity: O(n) by input records
+- Sample output:
+  - `TOTAL_RECORDS=00006`
+  - `VALID_RECORDS=00004`
+  - `INVALID_RECORDS=00002`
+  - `DEBIT_TOTAL_CENTS=000000001325`
+  - `CREDIT_TOTAL_CENTS=000000001300`
+  - `NET_TOTAL_CENTS=+000000000025`
+
 ## Expected Outputs (Smoke Checks)
 
 - C hello: `Hello, C world`
@@ -110,12 +129,17 @@ Primary track: Fortran, C, COBOL.
 - C Fibonacci iterative: `fib_iterative(20) = 6765`
 - C Fibonacci recursive: `fib_recursive(20) = 6765`
 - C LU solve: `lu_solution = [1.0, -2.0, -2.0]`
+- C LU determinant: `determinant = -3.0`
+- C LU row residuals: each entry in `row_residuals` should be `< 1e-12`
 - C LU residual: `residual_inf_norm` value should be `< 1e-12`
 - COBOL hello: `Hello, COBOL world`
 - COBOL factorial: contains `3628800`
 - COBOL Fibonacci iterative: contains `6765`
+- COBOL transactions report: totals and counts match sample input fixture
 - Fortran circle area: contains `The area is`
 - Fortran Fibonacci iterative: contains `6765`
 - Fortran Fibonacci recursive: contains `6765`
 - Fortran LU solve: contains `lu_solution = [1.0, -2.0, -2.0]`
+- Fortran LU determinant: contains `determinant = -3.0`
+- Fortran LU row residuals: each entry in `row_residuals` should be `< 1e-12`
 - Fortran LU residual: `residual_inf_norm` value should be `< 1e-12`

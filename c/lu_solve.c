@@ -21,6 +21,7 @@ static void swap_rows(double a[N][N], double b[N], int r1, int r2) {
 }
 
 static int lu_decompose(double a[N][N], double b[N]) {
+    int swap_count = 0;
     for (int k = 0; k < N; k++) {
         int pivot = k;
         double max_val = fabs(a[k][k]);
@@ -34,6 +35,9 @@ static int lu_decompose(double a[N][N], double b[N]) {
         if (max_val == 0.0) {
             return 0;
         }
+        if (pivot != k) {
+            swap_count++;
+        }
         swap_rows(a, b, k, pivot);
 
         for (int i = k + 1; i < N; i++) {
@@ -43,7 +47,7 @@ static int lu_decompose(double a[N][N], double b[N]) {
             }
         }
     }
-    return 1;
+    return (swap_count % 2 == 0) ? 1 : -1;
 }
 
 static void lu_solve(double a[N][N], double b[N], double x[N]) {
@@ -79,6 +83,23 @@ static double residual_inf_norm(const double a[N][N], const double x[N], const d
     return norm;
 }
 
+static void residual_rows(const double a[N][N], const double x[N], const double b[N], double out[N]) {
+    for (int i = 0; i < N; i++) {
+        out[i] = -b[i];
+        for (int j = 0; j < N; j++) {
+            out[i] += a[i][j] * x[j];
+        }
+    }
+}
+
+static double lu_determinant(const double lu[N][N], int parity) {
+    double det = (parity > 0) ? 1.0 : -1.0;
+    for (int i = 0; i < N; i++) {
+        det *= lu[i][i];
+    }
+    return det;
+}
+
 int main(void) {
     double a[N][N] = {
         {3.0, 2.0, -1.0},
@@ -89,6 +110,8 @@ int main(void) {
     double a_orig[N][N];
     double b_orig[N];
     double x[N];
+    double row_residuals[N];
+    int parity;
 
     for (int i = 0; i < N; i++) {
         b_orig[i] = b[i];
@@ -97,13 +120,17 @@ int main(void) {
         }
     }
 
-    if (!lu_decompose(a, b)) {
+    parity = lu_decompose(a, b);
+    if (parity == 0) {
         puts("LU failed: singular matrix");
         return 1;
     }
 
     lu_solve(a, b, x);
+    residual_rows(a_orig, x, b_orig, row_residuals);
     printf("lu_solution = [%.1f, %.1f, %.1f]\n", x[0], x[1], x[2]);
+    printf("determinant = %.1f\n", lu_determinant(a, parity));
+    printf("row_residuals = [%.3e, %.3e, %.3e]\n", row_residuals[0], row_residuals[1], row_residuals[2]);
     printf("residual_inf_norm = %.3e\n", residual_inf_norm(a_orig, x, b_orig));
     return 0;
 }

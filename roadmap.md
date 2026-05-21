@@ -87,6 +87,11 @@ Primary implementation focus is now:
 3. Small CLI menu to run selected examples from one entry point.
 4. Versioned learning tracks (beginner/intermediate).
 
+## Recent Complex Additions
+
+1. C and Fortran LU decomposition with partial pivoting, solve phase, and residual tolerance checks.
+2. COBOL batch-processing pipeline (`transactions_report.cob`) with input validation and aggregate reporting.
+
 ## Definition of Done (per change)
 
 1. Change is documented in README or relevant notes.
