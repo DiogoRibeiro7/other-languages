@@ -1,10 +1,11 @@
 program circlearea
-    real r, area, pi
-    parameter (pi = 3.14159)
-!    This program computes the area of a circle.
+    implicit none
+    real :: radius, area
+    real, parameter :: pi = 3.14159
+
+    ! Compute the area of a circle from a provided radius.
     print *, "What is the radius?"
-    read *, r
-    area = pi * r ** 2
+    read *, radius
+    area = pi * radius ** 2
     print *, "The area is", area
-    print *, "Bye!"
-    end program circlearea
+end program circlearea

@@ -1,23 +1,16 @@
-function catalan(n)
-{
-    let cat_ = 1;
- 
-    // For the first number
-    console.log(cat_ + " "); // C(0)
- 
-    // Iterate till N
-    for (let i = 1; i < n; i++)
-    {
-        // Calculate the number
-        // and print it
-        cat_ *= (4 * i - 2);
-        cat_ /= (i + 1);
-        console.log(cat_ + " ");
+// Catalan number sequence using an iterative multiplicative relation.
+function printCatalanSequence(count) {
+    let catalanValue = 1;
+    const output = [catalanValue];
+
+    for (let i = 1; i < count; i++) {
+        catalanValue *= 4 * i - 2;
+        catalanValue /= i + 1;
+        output.push(catalanValue);
     }
+
+    console.log(output.join(" "));
 }
- 
-// Driver code
-    let n = 5;
- 
-    // Function call
-    catalan(n);
+
+const count = 5;
+printCatalanSequence(count);

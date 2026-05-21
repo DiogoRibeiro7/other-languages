@@ -1,29 +1,22 @@
+// Catalan number sequence using the classic recursive definition.
 public class CatalanNumber {
-    int catalan(int n)
-    {
-        int res = 0;
- 
-        // Base case
-        if (n <= 1)
-        {
+    int catalan(int n) {
+        int result = 0;
+
+        if (n <= 1) {
             return 1;
         }
-        for (int i = 0; i < n; i++)
-        {
-            res += catalan(i)
-                * catalan(n - i - 1);
+        for (int i = 0; i < n; i++) {
+            result += catalan(i) * catalan(n - i - 1);
         }
-        return res;
+        return result;
     }
- 
-    // Driver Code
-    public static void main(String[] args)
-    {
+
+    public static void main(String[] args) {
         CatalanNumber cn = new CatalanNumber();
-        for (int i = 0; i < 15; i++)
-        {
+        for (int i = 0; i < 15; i++) {
             System.out.print(cn.catalan(i) + " ");
         }
+        System.out.println();
     }
-    
 }

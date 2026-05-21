@@ -2,15 +2,23 @@
 
 This roadmap focuses on turning the repository into a cleaner, more consistent, and easier-to-run multi-language learning project.
 
+## Direction Update
+
+Primary implementation focus is now:
+
+1. Fortran
+2. C
+3. COBOL
+
 ## Progress Status
 
 - [x] Added baseline repository documentation (`README.md`).
 - [x] Added root ignore rules (`.gitignore`).
 - [x] Added contribution guidelines (`CONTRIBUTING.md`).
 - [x] Started naming cleanup (`Cataln`/`fibbonacci` -> `Catalan`/`Fibonacci`).
-- [ ] Source/build folder split for all language examples.
-- [ ] Root-level validation runner for all examples.
-- [ ] CI workflow for compile/run checks.
+- [x] Source/build separation for compiled outputs (`.build/` convention).
+- [x] Root-level validation runner for all examples (`scripts/run-all.ps1`).
+- [x] CI workflow for compile/run checks (`.github/workflows/ci.yml`).
 
 ## Phase 1: Foundation (short term)
 
@@ -19,7 +27,7 @@ This roadmap focuses on turning the repository into a cleaner, more consistent, 
 3. Add per-language quickstart notes where missing.
 4. Ensure all examples run with a minimal command from documented paths.
 
-### Tasks
+### Phase 1 Tasks
 
 1. Rename typo-prone files/classes (for example `Cataln` -> `Catalan`, `fibbonacci` -> `fibonacci`).
 2. Group source files and outputs into clearer subfolders (for example `src/`, `build/`, `bin/` where appropriate).
@@ -32,16 +40,16 @@ This roadmap focuses on turning the repository into a cleaner, more consistent, 
 2. Add basic validation commands (build/run checks).
 3. Improve code readability and comments for educational value.
 
-### Tasks
+### Phase 2 Tasks
 
 1. Add a simple root script or make target to run all runnable examples.
-2. Add lightweight formatting/linting guidance:
+2. Add lightweight formatting/linting guidance. [Done]
    - C++: formatting preference
    - Go: `gofmt`
    - JavaScript/TypeScript: formatter/linter setup
    - Java/Fortran: basic style expectations
-3. Refactor examples to use consistent naming, input/output style, and file headers.
-4. Add small smoke tests or expected-output checks where practical.
+3. Refactor examples to use consistent naming, input/output style, and file headers. [Done]
+4. Add small smoke tests or expected-output checks where practical. [Done for Fortran/C/COBOL]
 
 ## Phase 3: Learning Experience
 
@@ -49,14 +57,15 @@ This roadmap focuses on turning the repository into a cleaner, more consistent, 
 2. Add cross-language equivalents of the same problems.
 3. Document complexity and tradeoffs for each implementation.
 
-### Tasks
+### Phase 3 Tasks
 
-1. Create an `examples/` index table mapping language -> topic -> file.
+1. Create an `examples/` index table mapping language -> topic -> file. [Done]
 2. For each major algorithm (Fibonacci, Catalan, matrix methods), include:
    - iterative and recursive variants (where meaningful)
    - complexity notes
    - sample input/output
-3. Add short writeups for language-specific differences.
+   [Done for Fibonacci on C/Fortran and iterative COBOL; LU matrix solve added for C/Fortran]
+3. Add short writeups for language-specific differences. [Done]
 
 ## Phase 4: Automation and CI
 
@@ -64,12 +73,12 @@ This roadmap focuses on turning the repository into a cleaner, more consistent, 
 2. Prevent regressions for docs and example execution.
 3. Publish quality signals in pull requests.
 
-### Tasks
+### Phase 4 Tasks
 
 1. Add a GitHub Actions workflow to run language-specific checks.
-2. Add a docs check for markdown consistency.
-3. Add a PR template with checklist items (builds, docs updated, naming consistency).
-4. Add badges to `README.md` once CI is in place.
+2. Add a docs check for markdown consistency. [Done]
+3. Add a PR template with checklist items (builds, docs updated, naming consistency). [Done]
+4. Add badges to `README.md` once CI is in place. [Done]
 
 ## Backlog (optional)
 

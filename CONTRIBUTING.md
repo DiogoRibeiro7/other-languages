@@ -17,6 +17,7 @@ This repository is a multi-language learning playground. Keep changes simple, ru
 2. Go: run `gofmt` on changed files.
 3. TypeScript/JavaScript: keep browser and Node examples explicit in docs.
 4. Fortran/C++: keep compile commands documented in `README.md`.
+5. Follow `STYLE_GUIDE.md` for per-language formatting and naming baseline.
 
 ## Pull request checklist
 
