@@ -106,6 +106,16 @@ if (Has-Command "gcc") {
             throw "Unexpected C Fibonacci recursive output: $result"
         }
     }
+    Run-Step "C Fibonacci fast-doubling compile and run" {
+        $cBuild = Join-Path $buildRoot "c"
+        New-Item -ItemType Directory -Path $cBuild -Force | Out-Null
+        $out = Join-Path $cBuild "fibonacci_fast_doubling.exe"
+        gcc (Join-Path $repoRoot "c\fibonacci_fast_doubling.c") -o $out
+        $result = & $out
+        if ($result -notmatch "fib_fast\(92\) = 7540113804746346429") {
+            throw "Unexpected C Fibonacci fast output: $result"
+        }
+    }
     Run-Step "C LU solve compile and run" {
         $cBuild = Join-Path $buildRoot "c"
         New-Item -ItemType Directory -Path $cBuild -Force | Out-Null
@@ -130,6 +140,16 @@ if (Has-Command "gcc") {
             }
         }
         Assert-ResidualBelow -Text $text -Tolerance 1.0e-12 -Label "C LU"
+    }
+    Run-Step "C Dijkstra heap compile and run" {
+        $cBuild = Join-Path $buildRoot "c"
+        New-Item -ItemType Directory -Path $cBuild -Force | Out-Null
+        $out = Join-Path $cBuild "dijkstra_heap.exe"
+        gcc (Join-Path $repoRoot "c\dijkstra_heap.c") -o $out
+        $result = & $out
+        if ($result -notmatch "dijkstra_dist = \[0,7,9,20,20,11\]") {
+            throw "Unexpected C Dijkstra output: $result"
+        }
     }
 } else {
     Step-Skip "C checks" "gcc not found"
@@ -218,6 +238,16 @@ if (Has-Command "gfortran") {
             throw "Unexpected Fortran Fibonacci recursive output: $text"
         }
     }
+    Run-Step "Fortran Fibonacci fast-doubling compile and run" {
+        $fortranBuild = Join-Path $buildRoot "fortran"
+        $out = Join-Path $fortranBuild "fibonacci_fast_doubling.exe"
+        gfortran (Join-Path $repoRoot "fortran\fibonacci_fast_doubling.f95") -o $out
+        $result = & $out
+        $text = ($result | Out-String)
+        if ($text -notmatch "fib_fast\(92\)\s*=\s*7540113804746346429") {
+            throw "Unexpected Fortran Fibonacci fast output: $text"
+        }
+    }
     Run-Step "Fortran LU solve compile and run" {
         $fortranBuild = Join-Path $buildRoot "fortran"
         $out = Join-Path $fortranBuild "lu_solve.exe"
@@ -242,11 +272,32 @@ if (Has-Command "gfortran") {
         }
         Assert-ResidualBelow -Text $text -Tolerance 1.0e-12 -Label "Fortran LU"
     }
+    Run-Step "Fortran Dijkstra heap compile and run" {
+        $fortranBuild = Join-Path $buildRoot "fortran"
+        $out = Join-Path $fortranBuild "dijkstra_heap.exe"
+        gfortran (Join-Path $repoRoot "fortran\dijkstra_heap.f95") -o $out
+        $result = & $out
+        $text = ($result | Out-String)
+        if ($text -notmatch "dijkstra_dist = \[0,7,9,20,20,11\]") {
+            throw "Unexpected Fortran Dijkstra output: $text"
+        }
+    }
 } else {
     Step-Skip "Fortran compile" "gfortran not found"
 }
 
 if (Has-Command "cobc") {
+    $gnucobolToolsBin = "C:\ProgramData\chocolatey\lib\gnucobol\tools\bin"
+    $originalPath = $env:PATH
+    $hadCobCc = Test-Path Env:COB_CC
+    if ($hadCobCc) {
+        $originalCobCc = $env:COB_CC
+    }
+    if (Test-Path $gnucobolToolsBin) {
+        $env:PATH = "$gnucobolToolsBin;$env:PATH"
+        $env:COB_CC = "gcc"
+    }
+
     $cobolBuild = Join-Path $buildRoot "cobol"
     New-Item -ItemType Directory -Path $cobolBuild -Force | Out-Null
     $cobolUsable = $true
@@ -302,6 +353,13 @@ if (Has-Command "cobc") {
                 throw "Unexpected COBOL report net total: $text"
             }
         }
+    }
+
+    $env:PATH = $originalPath
+    if ($hadCobCc) {
+        $env:COB_CC = $originalCobCc
+    } else {
+        Remove-Item Env:COB_CC -ErrorAction SilentlyContinue
     }
 } else {
     Step-Skip "COBOL checks" "cobc not found"

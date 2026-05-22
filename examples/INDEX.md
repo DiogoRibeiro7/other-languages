@@ -28,6 +28,14 @@ Primary track: Fortran, C, COBOL.
 - Complexity: O(2^n) time, O(n) call stack
 - Sample output: contains `fib_recursive(          20 ) =         6765`
 
+- Topic: Fibonacci (fast doubling)
+- File: `fortran/fibonacci_fast_doubling.f95`
+- Run:
+  - `gfortran .\fortran\fibonacci_fast_doubling.f95 -o .\.build\fortran\fibonacci_fast_doubling.exe`
+  - `.\.build\fortran\fibonacci_fast_doubling.exe`
+- Complexity: O(log n) time, O(log n) recursion depth
+- Sample output: contains `fib_fast(92) = 7540113804746346429`
+
 - Topic: LU solve (partial pivoting, Ax=b)
 - File: `fortran/lu_solve.f95`
 - Run:
@@ -38,6 +46,14 @@ Primary track: Fortran, C, COBOL.
 - Determinant: `determinant = -3.0`
 - Row residuals: each entry in `row_residuals` should be `< 1e-12` in absolute value
 - Residual check: `residual_inf_norm` should be `< 1e-12`
+
+- Topic: Dijkstra shortest path (binary heap)
+- File: `fortran/dijkstra_heap.f95`
+- Run:
+  - `gfortran .\fortran\dijkstra_heap.f95 -o .\.build\fortran\dijkstra_heap.exe`
+  - `.\.build\fortran\dijkstra_heap.exe`
+- Complexity: O((V+E) log V)
+- Sample output: contains `dijkstra_dist = [0,7,9,20,20,11]`
 
 ## C
 
@@ -71,6 +87,14 @@ Primary track: Fortran, C, COBOL.
 - Complexity: O(2^n) time, O(n) call stack
 - Sample output: `fib_recursive(20) = 6765`
 
+- Topic: Fibonacci (fast doubling)
+- File: `c/fibonacci_fast_doubling.c`
+- Run:
+  - `gcc .\c\fibonacci_fast_doubling.c -o .\.build\c\fibonacci_fast_doubling.exe`
+  - `.\.build\c\fibonacci_fast_doubling.exe`
+- Complexity: O(log n) time, O(log n) recursion depth
+- Sample output: `fib_fast(92) = 7540113804746346429`
+
 - Topic: LU solve (partial pivoting, Ax=b)
 - File: `c/lu_solve.c`
 - Run:
@@ -81,6 +105,14 @@ Primary track: Fortran, C, COBOL.
 - Determinant: `determinant = -3.0`
 - Row residuals: each entry in `row_residuals` should be `< 1e-12` in absolute value
 - Residual check: `residual_inf_norm` should be `< 1e-12`
+
+- Topic: Dijkstra shortest path (binary heap)
+- File: `c/dijkstra_heap.c`
+- Run:
+  - `gcc .\c\dijkstra_heap.c -o .\.build\c\dijkstra_heap.exe`
+  - `.\.build\c\dijkstra_heap.exe`
+- Complexity: O((V+E) log V)
+- Sample output: `dijkstra_dist = [0,7,9,20,20,11]`
 
 ## COBOL
 
@@ -128,10 +160,12 @@ Primary track: Fortran, C, COBOL.
 - C factorial: `factorial(10) = 3628800`
 - C Fibonacci iterative: `fib_iterative(20) = 6765`
 - C Fibonacci recursive: `fib_recursive(20) = 6765`
+- C Fibonacci fast doubling: `fib_fast(92) = 7540113804746346429`
 - C LU solve: `lu_solution = [1.0, -2.0, -2.0]`
 - C LU determinant: `determinant = -3.0`
 - C LU row residuals: each entry in `row_residuals` should be `< 1e-12`
 - C LU residual: `residual_inf_norm` value should be `< 1e-12`
+- C Dijkstra heap: `dijkstra_dist = [0,7,9,20,20,11]`
 - COBOL hello: `Hello, COBOL world`
 - COBOL factorial: contains `3628800`
 - COBOL Fibonacci iterative: contains `6765`
@@ -139,7 +173,9 @@ Primary track: Fortran, C, COBOL.
 - Fortran circle area: contains `The area is`
 - Fortran Fibonacci iterative: contains `6765`
 - Fortran Fibonacci recursive: contains `6765`
+- Fortran Fibonacci fast doubling: contains `7540113804746346429`
 - Fortran LU solve: contains `lu_solution = [1.0, -2.0, -2.0]`
 - Fortran LU determinant: contains `determinant = -3.0`
 - Fortran LU row residuals: each entry in `row_residuals` should be `< 1e-12`
 - Fortran LU residual: `residual_inf_norm` value should be `< 1e-12`
+- Fortran Dijkstra heap: contains `dijkstra_dist = [0,7,9,20,20,11]`

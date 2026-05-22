@@ -91,6 +91,8 @@ Primary implementation focus is now:
 
 1. C and Fortran LU decomposition with partial pivoting, solve phase, and residual tolerance checks.
 2. COBOL batch-processing pipeline (`transactions_report.cob`) with input validation and aggregate reporting.
+3. Local COBOL toolchain compatibility fix in smoke runner (uses bundled GnuCOBOL `tools\bin`), enabling active COBOL validation.
+4. Faster/advanced algorithms: O(log n) fast-doubling Fibonacci and heap-based Dijkstra in C and Fortran.
 
 ## Definition of Done (per change)
 
