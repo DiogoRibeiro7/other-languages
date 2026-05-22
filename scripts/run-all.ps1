@@ -151,6 +151,44 @@ if (Has-Command "gcc") {
             throw "Unexpected C Dijkstra output: $result"
         }
     }
+    Run-Step "C Bellman-Ford compile and run" {
+        $cBuild = Join-Path $buildRoot "c"
+        New-Item -ItemType Directory -Path $cBuild -Force | Out-Null
+        $out = Join-Path $cBuild "bellman_ford.exe"
+        gcc (Join-Path $repoRoot "c\bellman_ford.c") -o $out
+        $result = & $out
+        $text = ($result | Out-String)
+        if ($text -notmatch "bellman_ford_dist = \[0,2,4,7,-2\]") {
+            throw "Unexpected C Bellman-Ford distances: $text"
+        }
+        if ($text -notmatch "bellman_ford_neg_cycle = 0") {
+            throw "Unexpected C Bellman-Ford cycle flag: $text"
+        }
+    }
+    Run-Step "C Floyd-Warshall compile and run" {
+        $cBuild = Join-Path $buildRoot "c"
+        New-Item -ItemType Directory -Path $cBuild -Force | Out-Null
+        $out = Join-Path $cBuild "floyd_warshall.exe"
+        gcc (Join-Path $repoRoot "c\floyd_warshall.c") -o $out
+        $result = & $out
+        $text = ($result | Out-String)
+        if ($text -notmatch "floyd_row0 = \[0,5,8,9\]") {
+            throw "Unexpected C Floyd row0: $text"
+        }
+        if ($text -notmatch "floyd_row1 = \[1000000000,0,3,4\]") {
+            throw "Unexpected C Floyd row1: $text"
+        }
+    }
+    Run-Step "C A* grid compile and run" {
+        $cBuild = Join-Path $buildRoot "c"
+        New-Item -ItemType Directory -Path $cBuild -Force | Out-Null
+        $out = Join-Path $cBuild "astar_grid.exe"
+        gcc (Join-Path $repoRoot "c\astar_grid.c") -o $out
+        $result = & $out
+        if ($result -notmatch "astar_path_cost = 9") {
+            throw "Unexpected C A* output: $result"
+        }
+    }
 } else {
     Step-Skip "C checks" "gcc not found"
 }
@@ -280,6 +318,42 @@ if (Has-Command "gfortran") {
         $text = ($result | Out-String)
         if ($text -notmatch "dijkstra_dist = \[0,7,9,20,20,11\]") {
             throw "Unexpected Fortran Dijkstra output: $text"
+        }
+    }
+    Run-Step "Fortran Bellman-Ford compile and run" {
+        $fortranBuild = Join-Path $buildRoot "fortran"
+        $out = Join-Path $fortranBuild "bellman_ford.exe"
+        gfortran (Join-Path $repoRoot "fortran\bellman_ford.f95") -o $out
+        $result = & $out
+        $text = ($result | Out-String)
+        if ($text -notmatch "bellman_ford_dist = \[0,2,4,7,-2\]") {
+            throw "Unexpected Fortran Bellman-Ford distances: $text"
+        }
+        if ($text -notmatch "bellman_ford_neg_cycle = 0") {
+            throw "Unexpected Fortran Bellman-Ford cycle flag: $text"
+        }
+    }
+    Run-Step "Fortran Floyd-Warshall compile and run" {
+        $fortranBuild = Join-Path $buildRoot "fortran"
+        $out = Join-Path $fortranBuild "floyd_warshall.exe"
+        gfortran (Join-Path $repoRoot "fortran\floyd_warshall.f95") -o $out
+        $result = & $out
+        $text = ($result | Out-String)
+        if ($text -notmatch "floyd_row0 = \[0,5,8,9\]") {
+            throw "Unexpected Fortran Floyd row0: $text"
+        }
+        if ($text -notmatch "floyd_row1 = \[1000000000,0,3,4\]") {
+            throw "Unexpected Fortran Floyd row1: $text"
+        }
+    }
+    Run-Step "Fortran A* grid compile and run" {
+        $fortranBuild = Join-Path $buildRoot "fortran"
+        $out = Join-Path $fortranBuild "astar_grid.exe"
+        gfortran (Join-Path $repoRoot "fortran\astar_grid.f95") -o $out
+        $result = & $out
+        $text = ($result | Out-String)
+        if ($text -notmatch "astar_path_cost = 9") {
+            throw "Unexpected Fortran A* output: $text"
         }
     }
 } else {

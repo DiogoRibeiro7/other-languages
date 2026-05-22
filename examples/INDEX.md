@@ -55,6 +55,30 @@ Primary track: Fortran, C, COBOL.
 - Complexity: O((V+E) log V)
 - Sample output: contains `dijkstra_dist = [0,7,9,20,20,11]`
 
+- Topic: Bellman-Ford (negative edges)
+- File: `fortran/bellman_ford.f95`
+- Run:
+  - `gfortran .\fortran\bellman_ford.f95 -o .\.build\fortran\bellman_ford.exe`
+  - `.\.build\fortran\bellman_ford.exe`
+- Complexity: O(VE)
+- Sample output: contains `bellman_ford_dist = [0,2,4,7,-2]` and `bellman_ford_neg_cycle = 0`
+
+- Topic: Floyd-Warshall (all-pairs shortest paths)
+- File: `fortran/floyd_warshall.f95`
+- Run:
+  - `gfortran .\fortran\floyd_warshall.f95 -o .\.build\fortran\floyd_warshall.exe`
+  - `.\.build\fortran\floyd_warshall.exe`
+- Complexity: O(V^3)
+- Sample output: contains `floyd_row0 = [0,5,8,9]` and `floyd_row1 = [1000000000,0,3,4]`
+
+- Topic: A* pathfinding (Manhattan heuristic on grid)
+- File: `fortran/astar_grid.f95`
+- Run:
+  - `gfortran .\fortran\astar_grid.f95 -o .\.build\fortran\astar_grid.exe`
+  - `.\.build\fortran\astar_grid.exe`
+- Complexity: typical O((V+E) log V), heuristic-dependent
+- Sample output: contains `astar_path_cost = 9`
+
 ## C
 
 - Topic: Hello world
@@ -114,6 +138,30 @@ Primary track: Fortran, C, COBOL.
 - Complexity: O((V+E) log V)
 - Sample output: `dijkstra_dist = [0,7,9,20,20,11]`
 
+- Topic: Bellman-Ford (negative edges)
+- File: `c/bellman_ford.c`
+- Run:
+  - `gcc .\c\bellman_ford.c -o .\.build\c\bellman_ford.exe`
+  - `.\.build\c\bellman_ford.exe`
+- Complexity: O(VE)
+- Sample output: `bellman_ford_dist = [0,2,4,7,-2]` and `bellman_ford_neg_cycle = 0`
+
+- Topic: Floyd-Warshall (all-pairs shortest paths)
+- File: `c/floyd_warshall.c`
+- Run:
+  - `gcc .\c\floyd_warshall.c -o .\.build\c\floyd_warshall.exe`
+  - `.\.build\c\floyd_warshall.exe`
+- Complexity: O(V^3)
+- Sample output: `floyd_row0 = [0,5,8,9]` and `floyd_row1 = [1000000000,0,3,4]`
+
+- Topic: A* pathfinding (Manhattan heuristic on grid)
+- File: `c/astar_grid.c`
+- Run:
+  - `gcc .\c\astar_grid.c -o .\.build\c\astar_grid.exe`
+  - `.\.build\c\astar_grid.exe`
+- Complexity: typical O((V+E) log V), heuristic-dependent
+- Sample output: `astar_path_cost = 9`
+
 ## COBOL
 
 - Topic: Hello world
@@ -166,6 +214,9 @@ Primary track: Fortran, C, COBOL.
 - C LU row residuals: each entry in `row_residuals` should be `< 1e-12`
 - C LU residual: `residual_inf_norm` value should be `< 1e-12`
 - C Dijkstra heap: `dijkstra_dist = [0,7,9,20,20,11]`
+- C Bellman-Ford: `bellman_ford_dist = [0,2,4,7,-2]`, `bellman_ford_neg_cycle = 0`
+- C Floyd-Warshall: `floyd_row0 = [0,5,8,9]`, `floyd_row1 = [1000000000,0,3,4]`
+- C A*: `astar_path_cost = 9`
 - COBOL hello: `Hello, COBOL world`
 - COBOL factorial: contains `3628800`
 - COBOL Fibonacci iterative: contains `6765`
@@ -179,3 +230,6 @@ Primary track: Fortran, C, COBOL.
 - Fortran LU row residuals: each entry in `row_residuals` should be `< 1e-12`
 - Fortran LU residual: `residual_inf_norm` value should be `< 1e-12`
 - Fortran Dijkstra heap: contains `dijkstra_dist = [0,7,9,20,20,11]`
+- Fortran Bellman-Ford: contains `bellman_ford_dist = [0,2,4,7,-2]`, `bellman_ford_neg_cycle = 0`
+- Fortran Floyd-Warshall: contains `floyd_row0 = [0,5,8,9]`, `floyd_row1 = [1000000000,0,3,4]`
+- Fortran A*: contains `astar_path_cost = 9`
