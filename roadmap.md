@@ -95,6 +95,7 @@ Primary implementation focus is now:
 4. Faster/advanced algorithms: O(log n) fast-doubling Fibonacci and heap-based Dijkstra in C and Fortran.
 5. Higher-complexity graph algorithms: Bellman-Ford (negative edges) and Floyd-Warshall (all-pairs) in C and Fortran.
 6. A* pathfinding (heuristic search on grids) in C and Fortran with smoke assertions.
+7. Johnson's APSP (Bellman-Ford reweight + repeated Dijkstra) in C and Fortran.
 
 ## Definition of Done (per change)
 

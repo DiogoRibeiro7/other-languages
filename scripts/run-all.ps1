@@ -189,6 +189,26 @@ if (Has-Command "gcc") {
             throw "Unexpected C A* output: $result"
         }
     }
+    Run-Step "C Johnson APSP compile and run" {
+        $cBuild = Join-Path $buildRoot "c"
+        New-Item -ItemType Directory -Path $cBuild -Force | Out-Null
+        $out = Join-Path $cBuild "johnson_apsp.exe"
+        gcc (Join-Path $repoRoot "c\johnson_apsp.c") -o $out
+        $result = & $out
+        $text = ($result | Out-String)
+        if ($text -notmatch "johnson_row0 = \[0,2,4,7,-2\]") {
+            throw "Unexpected C Johnson row0: $text"
+        }
+        if ($text -notmatch "johnson_row1 = \[-2,0,2,5,-4\]") {
+            throw "Unexpected C Johnson row1: $text"
+        }
+        if ($text -notmatch "johnson_row3 = \[-7,-5,-3,0,-9\]") {
+            throw "Unexpected C Johnson row3: $text"
+        }
+        if ($text -notmatch "johnson_neg_cycle = 0") {
+            throw "Unexpected C Johnson cycle flag: $text"
+        }
+    }
 } else {
     Step-Skip "C checks" "gcc not found"
 }
@@ -354,6 +374,25 @@ if (Has-Command "gfortran") {
         $text = ($result | Out-String)
         if ($text -notmatch "astar_path_cost = 9") {
             throw "Unexpected Fortran A* output: $text"
+        }
+    }
+    Run-Step "Fortran Johnson APSP compile and run" {
+        $fortranBuild = Join-Path $buildRoot "fortran"
+        $out = Join-Path $fortranBuild "johnson_apsp.exe"
+        gfortran (Join-Path $repoRoot "fortran\johnson_apsp.f95") -o $out
+        $result = & $out
+        $text = ($result | Out-String)
+        if ($text -notmatch "johnson_row0 = \[0,2,4,7,-2\]") {
+            throw "Unexpected Fortran Johnson row0: $text"
+        }
+        if ($text -notmatch "johnson_row1 = \[-2,0,2,5,-4\]") {
+            throw "Unexpected Fortran Johnson row1: $text"
+        }
+        if ($text -notmatch "johnson_row3 = \[-7,-5,-3,0,-9\]") {
+            throw "Unexpected Fortran Johnson row3: $text"
+        }
+        if ($text -notmatch "johnson_neg_cycle = 0") {
+            throw "Unexpected Fortran Johnson cycle flag: $text"
         }
     }
 } else {

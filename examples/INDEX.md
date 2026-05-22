@@ -79,6 +79,18 @@ Primary track: Fortran, C, COBOL.
 - Complexity: typical O((V+E) log V), heuristic-dependent
 - Sample output: contains `astar_path_cost = 9`
 
+- Topic: Johnson APSP (Bellman-Ford reweight + repeated Dijkstra)
+- File: `fortran/johnson_apsp.f95`
+- Run:
+  - `gfortran .\fortran\johnson_apsp.f95 -o .\.build\fortran\johnson_apsp.exe`
+  - `.\.build\fortran\johnson_apsp.exe`
+- Complexity: O(VE + V(E+V)logV)
+- Sample output:
+  - `johnson_row0 = [0,2,4,7,-2]`
+  - `johnson_row1 = [-2,0,2,5,-4]`
+  - `johnson_row3 = [-7,-5,-3,0,-9]`
+  - `johnson_neg_cycle = 0`
+
 ## C
 
 - Topic: Hello world
@@ -162,6 +174,18 @@ Primary track: Fortran, C, COBOL.
 - Complexity: typical O((V+E) log V), heuristic-dependent
 - Sample output: `astar_path_cost = 9`
 
+- Topic: Johnson APSP (Bellman-Ford reweight + repeated Dijkstra)
+- File: `c/johnson_apsp.c`
+- Run:
+  - `gcc .\c\johnson_apsp.c -o .\.build\c\johnson_apsp.exe`
+  - `.\.build\c\johnson_apsp.exe`
+- Complexity: O(VE + V(E+V)logV)
+- Sample output:
+  - `johnson_row0 = [0,2,4,7,-2]`
+  - `johnson_row1 = [-2,0,2,5,-4]`
+  - `johnson_row3 = [-7,-5,-3,0,-9]`
+  - `johnson_neg_cycle = 0`
+
 ## COBOL
 
 - Topic: Hello world
@@ -217,6 +241,7 @@ Primary track: Fortran, C, COBOL.
 - C Bellman-Ford: `bellman_ford_dist = [0,2,4,7,-2]`, `bellman_ford_neg_cycle = 0`
 - C Floyd-Warshall: `floyd_row0 = [0,5,8,9]`, `floyd_row1 = [1000000000,0,3,4]`
 - C A*: `astar_path_cost = 9`
+- C Johnson APSP: rows match reference APSP and `johnson_neg_cycle = 0`
 - COBOL hello: `Hello, COBOL world`
 - COBOL factorial: contains `3628800`
 - COBOL Fibonacci iterative: contains `6765`
@@ -233,3 +258,4 @@ Primary track: Fortran, C, COBOL.
 - Fortran Bellman-Ford: contains `bellman_ford_dist = [0,2,4,7,-2]`, `bellman_ford_neg_cycle = 0`
 - Fortran Floyd-Warshall: contains `floyd_row0 = [0,5,8,9]`, `floyd_row1 = [1000000000,0,3,4]`
 - Fortran A*: contains `astar_path_cost = 9`
+- Fortran Johnson APSP: rows match reference APSP and `johnson_neg_cycle = 0`
